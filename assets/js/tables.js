@@ -1,31 +1,10 @@
 $(document).ready(function(){
-   $('#table').DataTable({
-
-                
-        "ajax":
-        {
-         "url":"dashboard/get_jobs",
-         "type":"post"
-        
-       },
-       
-       "columns": [
-        { "data": "SR" },
-        { "data": "JOB_TITLE" },
-        { "data" : "NAME" },
-        { "data" : "USERNAME" },
-        { "data" : "ACTION"}
-        
-    
-                ]
-
-
-
-
-
-    });
+   $('#data').DataTable();
     var path =  window.location.pathname.split('/');
     var len = path.length-1;
+
+
+    
     $('#tablea').DataTable({
 
                 
@@ -67,4 +46,29 @@ $(document).ready(function(){
         });
     }
     });
+
+
+    $("#add_btn").click(function(){
+        $.ajax({
+            url : "add_prop",
+            type : "post",
+            dataType : "json",
+            data : {"NAME":$("#ADD_PROP").val(), "LIB_ID":13},
+            success : function(data){
+                if(data.status == 1)
+                {
+                    alert("successs");
+                    var dataToAppend = "<tr>"
+                                           +"<td>"+ $("#ADD_PROP").val()  +"</td>" 
+                                           +"<td>" + "<button class = 'remove_btn' id = '"+ data.ID+"'>"+ "X" +"</button>"
+                                      +"</tr>"
+                    $("#data").append(dataToAppend);
+                }
+            }
+        });
+    });
 });
+// $(document).ready(function(){
+    
+// });
+
